@@ -1,0 +1,67 @@
+profiles:
+  - develop
+devices:
+  eth0:
+    ipv4.address: 192.168.50.10
+    network: develop
+    type: nic
+  android-dir:
+    path: /home/android
+    pool: pool
+    source: android
+    type: disk
+  Program-dir:
+    path: /home/program
+    pool: pool
+    source: program
+    type: disk
+  Key-dir:
+    path: /home/key
+    pool: pool
+    source: key
+    type: disk
+config:
+  cloud-init.user-data: |
+    #cloud-config
+    package_upgrade: true
+    ssh_pwauth: true
+    users:
+      - name: user
+        lock_passwd: false
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        plain_text_passwd: "pass"
+        shell: /bin/bash
+        groups: lxd, plugdev, sudo
+        ssh_authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQTriSWJF8t+TVSjG1A5vIdphPbKKWfKgYw59vA3ldp usc@local.internal
+    packages:
+      # flutter
+      - git
+      - unzip
+      - zip
+      - libglu1-mesa
+      # android studio
+      - libxrender1
+      - libxtst6
+      - libxi6
+      - fontconfig
+      - xauth
+      # other
+      - aria2
+      - vim
+    write_files:
+    - content: |
+        alias studio=/home/android/android-studio/bin/studio.sh
+      path: /home/user/.bashrc
+      append: true
+      defer: true
+      permissions: '0777'
+    snap:
+      commands:
+        00: snap install flutter --classic
+    runcmd:
+      - chmod 777 -f /home/android /home/program /home/key
+      - sudo -u user flutter doctor
+      - sudo -u user flutter config --android-sdk /home/android/Sdk/
+      - aria2c -x 5 https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.3.1.19/android-studio-2022.3.1.19-linux.tar.gz -d /home/android -o android-studio.tar.gz
+      - tar -xvf /home/android/android-studio.tar.gz -C /home/android/
