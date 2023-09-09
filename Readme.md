@@ -24,6 +24,24 @@ lxc storage volume create pool Program
 lxc storage volume create pool Key
 ```
 
+# android SDK関連
+### android studioの起動
+```sh
+# userにログインして以下を実行
+studio
+# GUIで android SDK Location の設定とダウンロード
+```
+### flutterの設定
+```sh
+flutter doctor --android-licenses
+```
+### 各種PATH
+- android studio  
+  `/usr/local/src/android-studio/studio.sh`
+- android SDK Location  
+  `/home/android/Sdk`
+
+
 # ポートフォワーディングの設定
 ```sh
 HOST_IP=192.168.1.2
@@ -34,7 +52,7 @@ lxc network forward port add develop $HOST_IP tcp 20022 192.168.50.10 22
 # 接続コマンド
 ```sh
 HOST_IP=192.168.1.2
-ssh -Yp 20022 -i flutter_LXD/key/key user@$HOST_IP
+ssh -XYp 20022 -i flutter_LXD/key/key user@$HOST_IP
 ```
 
 # git用鍵ファイルの設定
@@ -47,7 +65,7 @@ scp -P 10022 -i flutter_LXD/key/key $KEY_FILE user@$HOST_IP:/home/key/git
 # USBデバイス
 ```sh
 # デバイスの追加
-lxc config device add Qt phone usb vendorid=<ID> mode=0666
+lxc config device add flutter phone usb vendorid=<ID> mode=0666
 # デバイスの削除
-lxc config device remove Qt phone
+lxc config device remove flutter phone
 ```

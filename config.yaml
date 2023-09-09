@@ -40,6 +40,10 @@ config:
       - unzip
       - zip
       - libglu1-mesa
+      - libepoxy0
+      - libgtk-3-0
+      - libgl1
+      - libegl1
       # android studio
       - libxrender1
       - libxtst6
@@ -47,11 +51,13 @@ config:
       - fontconfig
       - xauth
       # other
+      - less
       - aria2
       - vim
     write_files:
     - content: |
-        alias studio=/home/android/android-studio/bin/studio.sh
+        PATH=$PATH:/home/android/Sdk/platform-tools
+        alias studio=/usr/local/src/android-studio/bin/studio.sh
       path: /home/user/.bashrc
       append: true
       defer: true
@@ -61,7 +67,7 @@ config:
         00: snap install flutter --classic
     runcmd:
       - chmod 777 -f /home/android /home/program /home/key
+      - if [ ! -f /home/android/android-studio.tar.gz ]; then aria2c -x 5 https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.3.1.19/android-studio-2022.3.1.19-linux.tar.gz -d /home/android -o android-studio.tar.gz; fi
+      - tar -xvf /home/android/android-studio.tar.gz -C /usr/local/src/
       - sudo -u user flutter doctor
       - sudo -u user flutter config --android-sdk /home/android/Sdk/
-      - aria2c -x 5 https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.3.1.19/android-studio-2022.3.1.19-linux.tar.gz -d /home/android -o android-studio.tar.gz
-      - tar -xvf /home/android/android-studio.tar.gz -C /home/android/
