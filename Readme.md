@@ -31,7 +31,7 @@ lxc storage volume create pool Key
 studio
 # GUIで android SDK Location の設定とダウンロード
 ```
-### flutterの設定
+### Flutterの設定
 ```sh
 flutter doctor --android-licenses
 ```
@@ -52,20 +52,20 @@ lxc network forward port add develop $HOST_IP tcp 20022 192.168.50.10 22
 # 接続コマンド
 ```sh
 HOST_IP=192.168.1.2
-ssh -XYp 20022 -i flutter_LXD/key/key user@$HOST_IP
+ssh -XYp 20022 -i Flutter_LXD/key/key user@$HOST_IP
 ```
 
 # git用鍵ファイルの設定
 ```sh
 HOST_IP=192.168.1.2
 KEY_FILE=path/to/key
-scp -P 10022 -i flutter_LXD/key/key $KEY_FILE user@$HOST_IP:/home/key/git
+scp -P 10022 -i Flutter_LXD/key/key $KEY_FILE user@$HOST_IP:/home/key/git
 ```
 
 # USBデバイス
 ```sh
 # デバイスの追加
-lxc config device add flutter phone usb vendorid=<ID> mode=0666
+lxc config device add Flutter phone usb vendorid=<ID> mode=0666
 # デバイスの削除
-lxc config device remove flutter phone
+lxc config device remove Flutter phone
 ```

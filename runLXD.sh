@@ -1,3 +1,3 @@
 cd $(dirname $0)
 
-lxc launch ubuntu-minimal:j flutter < config.yaml
+lxc launch ubuntu-minimal:j Flutter < config.yaml

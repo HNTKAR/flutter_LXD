@@ -50,13 +50,13 @@ config:
       - libxi6
       - fontconfig
       - xauth
-      # other
+      # tool
       - less
       - aria2
       - vim
     write_files:
     - content: |
-        PATH=$PATH:/home/android/Sdk/platform-tools
+        export PATH=$PATH:/home/android/Sdk/platform-tools
         alias studio=/usr/local/src/android-studio/bin/studio.sh
       path: /home/user/.bashrc
       append: true
